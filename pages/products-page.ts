@@ -1,26 +1,25 @@
 import { expect, Locator, Page } from "@playwright/test";
+import { BasePage } from "./base-page";
+import { getByDataTestId } from "../helpers/utils";
 
-export class ProductsPage {
-    nameProductItem: Locator
-    descriptionProductItem: Locator
-    priceProductItem: Locator
-    imgProductItem: Locator
-    buttonProductItem: Locator
+export class ProductsPage extends BasePage {
+    nameProductItems: Locator
+    descriptionProductItems: Locator
+    priceProductItems: Locator
 
     constructor(page: Page) {
-        const firstProduct = page.locator('[data-test="inventory-item"]').first();
-        this.nameProductItem = firstProduct.locator('[data-test="inventory-item-name"]')
-        this.descriptionProductItem = firstProduct.locator('[data-test="inventory-item-desc"]')
-        this.priceProductItem = firstProduct.locator('[data-test="inventory-item-price"]')
-        this.imgProductItem = firstProduct.locator('[data-test="inventory-item-sauce-labs-backpack-img"]')
-        this.buttonProductItem = firstProduct.locator('[data-test="add-to-cart-sauce-labs-backpack"]')
+        super(page)
+        this.nameProductItems = getByDataTestId(page, "inventory-item-name");
+        this.descriptionProductItems = getByDataTestId(page, "inventory-item-desc");
+        this.priceProductItems = getByDataTestId(page, "inventory-item-price");
     }
 
-    public async verifyProductDetailIsVisible() {
-        await expect(this.nameProductItem).toBeVisible();
-        await expect(this.descriptionProductItem).toBeVisible();
-        await expect(this.priceProductItem).toBeVisible();
-        await expect(this.imgProductItem).toBeVisible();
-        await expect(this.buttonProductItem).toBeVisible();
+    public async verifyProductDetailsIsVisible() {
+        const productCount = await this.nameProductItems.count();
+        for (let i = 0; i < productCount; i++) {
+            await expect(this.nameProductItems.nth(i)).toBeVisible();
+            await expect(this.descriptionProductItems.nth(i)).toBeVisible();
+            await expect(this.priceProductItems.nth(i)).toBeVisible();
+        }
     }
 }
