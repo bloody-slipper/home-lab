@@ -6,12 +6,14 @@ export class ProductsPage extends BasePage {
     nameProductItems: Locator
     descriptionProductItems: Locator
     priceProductItems: Locator
+    cartButton: Locator
 
     constructor(page: Page) {
         super(page)
         this.nameProductItems = getByDataTestId(page, "inventory-item-name");
         this.descriptionProductItems = getByDataTestId(page, "inventory-item-desc");
         this.priceProductItems = getByDataTestId(page, "inventory-item-price");
+        this.cartButton = getByDataTestId(page, "shopping-cart-link");
     }
 
     public async verifyProductDetailsIsVisible() {
