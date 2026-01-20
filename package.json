@@ -4,8 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "pw": "playwright test",
-    "pw:ui": "playwright test --ui"
+    "pw:ui-tests": "playwright test --project=ui-tests",
+    "pw:ui-tests:ui": "playwright test --project=ui-tests --ui",
+    "pw:api-tests": "playwright test --project=api-tests",
+    "install:deps": "npm install"
   },
   "keywords": [],
   "author": "",
@@ -13,5 +15,8 @@
   "devDependencies": {
     "@playwright/test": "^1.56.1",
     "@types/node": "^24.9.0"
+  },
+  "dependencies": {
+    "dotenv": "^17.2.3"
   }
 }
